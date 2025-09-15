@@ -1,0 +1,72 @@
+<!-- Write 6 Function in Script 
+	
+	display 
+	addition 
+	subtraction
+	multiply
+	division 
+	calculate
+	
+	Accept data from user 
+	    2 numbers and Which Operation they want to perform according to choice call particular function and
+        display result using callback function concept 
+        calculate(n1 , n2 , mcallBack)
+		addition (n1 , n2 , display); -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate With callback</title>
+</head>
+<body>
+    <h2>Simple Calculator Using Callback Function</h2>
+   <script>
+        function display(result){
+        alert("Result:"+result);
+    }
+    function addition(n1,n2,callback){
+        const result=n1+n2;
+        callback(result);
+    }
+    function subtraction(n1,n2,callback){
+        const result=n1-n2;
+        callback(result);
+    }
+    function multiply(n1,n2,callback){
+        const result=n1*n2;
+        callback(result);
+    }
+    function division(n1,n2,callback){
+        if(n2===0){
+            callback("Canno divide by zero");
+        }else{
+            const result=n1/n2;
+            callback(result);
+        }
+    }
+    function calculate(n1,n2,operationCallback){
+        operationCallback(n1,n2,display);
+    }
+    const num1=parseFloat(prompt("Enter first number:"));
+    const num2=parseFloat(prompt("Enter second number:"));
+    const choice=prompt("Enter operation: add,sub,mul,div").toLowerCase();
+
+    switch(choice){
+        case "add":
+            calculate(num1,num2,addition);
+            break;
+        case "sub":
+            calculate(num1,num2,subtraction);
+            break;
+        case "mul":
+            calculate(num1,num2,multiply);
+        case "div":
+            calculate(num1,num2,division);
+        default:additionalert("Invalid operation... Please enter,sub,mul,or div.");
+    }
+   </script> 
+    
+</body>
+</html>
