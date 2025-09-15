@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resume & Registration Viewer</title>
+  <style>
+    /* Reset some default styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: #fff;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      font-weight: 700;
+      font-size: 2rem;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    }
+
+    /* Container for buttons */
+    .button-container {
+      margin-bottom: 30px;
+    }
+
+    button {
+      background-color: #fff;
+      color: #2575fc;
+      border: none;
+      padding: 12px 28px;
+      margin-right: 20px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(37, 117, 252, 0.4);
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1f59d8;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(31, 89, 216, 0.6);
+    }
+
+    iframe {
+      width: 700px;
+      height: 450px;
+      border-radius: 15px;
+      border: 3px solid #fff;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      background-color: #fff;
+      transition: border-color 0.3s ease;
+    }
+
+    iframe:focus {
+      outline: none;
+      border-color: #f39c12;
+      box-shadow: 0 0 15px #f39c12;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      iframe {
+        width: 90vw;
+        height: 60vh;
+      }
+      button {
+        margin-bottom: 15px;
+        margin-right: 10px;
+        width: 140px;
+      }
+      .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Resume & Registration Viewer</h2>
+
+  <div class="button-container">
+    <button onclick="loadPage('resume1.html')">Resume</button>
+    <button onclick="loadPage('registration.html')">Registration Form</button>
+  </div>
+
+  <iframe
+    id="contentFrame"
+    src="img.jpg"
+    frameborder="0"
+    title="Content Frame"
+    tabindex="0"
+  ></iframe>
+
+  <script>
+    function loadPage(page) {
+      const iframe = document.getElementById('contentFrame');
+      iframe.src = page;
+    }
+  </script>
+</body>
+</html>

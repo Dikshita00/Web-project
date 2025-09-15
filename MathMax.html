@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculate Function</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #007bff;
+      color: rgb(14, 14, 14);
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .result p {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calculate Numbers</h1>
+
+  <input type="text" id="numberInput" placeholder="Enter numbers separated by commas (e.g., 4, 15, 9, 22)">
+  <button onclick="handleCalculate()">Calculate</button>
+
+  <div class="result" id="resultArea" style="display:none;">
+    <p><strong>Sum:</strong> <span id="sumResult"></span></p>
+    <p><strong>Odd Numbers:</strong> <span id="oddNumbersResult"></span></p>
+    <p><strong>Maximum Number:</strong> <span id="maxResult"></span></p>
+  </div>
+
+  <script>
+    function calculate(...a) {
+      const sum = a.reduce((acc, val) => acc + val, 0);
+
+      
+      const oddNumbers = a.filter(num => num % 2 !== 0);
+
+      
+      const max = Math.max(...a);
+
+      return {
+        sum,
+        oddNumbers,
+        max
+      };
+    }
+
+    function handleCalculate() {
+      const input = document.getElementById("numberInput").value;
+      const numberArray = input
+        .split(",")
+        .map(num => parseFloat(num.trim()))
+        .filter(num => !isNaN(num)); 
+
+      if (numberArray.length === 0) {
+        alert("Please enter valid numbers separated by commas.");
+        return;
+      }
+
+      const result = calculate(...numberArray);
+
+      document.getElementById("sumResult").textContent = result.sum;
+      document.getElementById("oddNumbersResult").textContent = result.oddNumbers.join(", ");
+      document.getElementById("maxResult").textContent = result.max;
+      document.getElementById("resultArea").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

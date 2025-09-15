@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Simple Form</h2>
+
+<form id="myForm" onsubmit="return validateForm()">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name">
+    <div id="nameError" class="error"></div>
+    <br><br>
+
+    <label for="age">Age:</label><br>
+    <input type="text" id="age" name="age">
+    <div id="ageError" class="error"></div>
+    <br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+function validateForm() {
+    let isValid = true;
+
+    // Clear previous errors
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("ageError").innerHTML = "";
+
+    // Get values
+    const name = document.getElementById("name").value.trim();
+    const age = document.getElementById("age").value.trim();
+
+    // Validate Name
+    if (name === "") {
+        document.getElementById("nameError").innerHTML = "Name is required.";
+        isValid = false;
+    } else if (!/^[A-Za-z ]+$/.test(name)) {
+        document.getElementById("nameError").innerHTML = "Name must contain only letters.";
+        isValid = false;
+    }
+
+    // Validate Age
+    if (age === "") {
+        document.getElementById("ageError").innerHTML = "Age is required.";
+        isValid = false;
+    } else if (isNaN(age)) {
+        document.getElementById("ageError").innerHTML = "Age must be a number.";
+        isValid = false;
+    } else if (age < 1 || age > 120) {
+        document.getElementById("ageError").innerHTML = "Age must be between 1 and 120.";
+        isValid = false;
+    }
+
+    return isValid;
+}
+</script>
+
+</body>
+</html>

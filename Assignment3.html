@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Array Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+            color: darkblue;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Array Manipulation</h2>
+    
+    <input type="text" id="numInput" placeholder="Enter a number">
+    <br><br>
+    
+    <button onclick="addAtEnd()">Add at End</button>
+    <button onclick="addAtStart()">Add at Start</button>
+    <button onclick="deleteFromEnd()">Delete from End</button>
+    <button onclick="deleteFromStart()">Delete from Start</button>
+    <button onclick="displayOdd()">Display Odd Numbers</button>
+    <button onclick="displayEven()">Display Even Numbers</button>
+    
+    <div id="output"></div>
+
+    <script>
+        let numbers = [];
+
+        function getInputValue() {
+            const input = document.getElementById('numInput').value;
+            return parseInt(input, 10);
+        }
+
+        function addAtEnd() {
+            const value = getInputValue();
+            if (!isNaN(value)) {
+                numbers.push(value);
+                showOutput("Added at end: " + value);
+            } else {
+                showOutput("Please enter a valid number.");
+            }
+        }
+
+        function addAtStart() {
+            const value = getInputValue();
+            if (!isNaN(value)) {
+                numbers.unshift(value);
+                showOutput("Added at start: " + value);
+            } else {
+                showOutput("Please enter a valid number.");
+            }
+        }
+
+        function deleteFromEnd() {
+            if (numbers.length > 0) {
+                const removed = numbers.pop();
+                showOutput("Deleted from end: " + removed);
+            } else {
+                showOutput("Array is already empty.");
+            }
+        }
+
+        function deleteFromStart() {
+            if (numbers.length > 0) {
+                const removed = numbers.shift();
+                showOutput("Deleted from start: " + removed);
+            } else {
+                showOutput("Array is already empty.");
+            }
+        }
+
+        function displayOdd() {
+            const oddNumbers = numbers.filter(num => num % 2 !== 0);
+            showOutput("Odd Numbers: " + oddNumbers.join(", "));
+        }
+
+        function displayEven() {
+            const evenNumbers = numbers.filter(num => num % 2 === 0);
+            showOutput("Even Numbers: " + evenNumbers.join(", "));
+        }
+
+        function showOutput(message) {
+            document.getElementById('output').innerHTML = `
+                <strong>${message}</strong><br>
+                <em>Current Array:</em> [ ${numbers.join(", ")} ]
+            `;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Employee Data Entry</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    label {
+      display: inline-block;
+      width: 120px;
+      margin-bottom: 8px;
+    }
+    input {
+      padding: 6px;
+      width: 250px;
+      margin-bottom: 10px;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+      margin-left: 125px;#007bff
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 8px 15px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    table {
+      margin-top: 25px;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 700px;
+    }
+    th, td {
+      border: 1px solid #000000;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f3a4a4;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Employee Data Form</h2>
+<form id="employeeForm" onsubmit="return submitForm()">
+  <div>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" />
+    <div id="firstNameError" class="error"></div>
+  </div>
+  <div>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" />
+    <div id="lastNameError" class="error"></div>
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="text" id="email" />
+    <div id="emailError" class="error"></div>
+  </div>
+  <div>
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" max="" />
+    <div id="dobError" class="error"></div>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<table id="employeeTable" style="display:none;">
+  <thead>
+    <tr>
+      <th>First Name</th><th>Last Name</th><th>Email</th><th>Date of Birth</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
+
+<script>
+  // Set max date for DOB to today
+  document.getElementById('dob').max = new Date().toISOString().split('T')[0];
+
+  function submitForm() {
+    // Clear previous errors
+    ['firstNameError', 'lastNameError', 'emailError', 'dobError'].forEach(id => {
+      document.getElementById(id).textContent = '';
+    });
+
+    // Get input values
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const dob = document.getElementById('dob').value;
+
+    let valid = true;
+
+    // Validate fields
+    if (!firstName) {
+      document.getElementById('firstNameError').textContent = 'First Name is required';
+      valid = false;
+    }
+    if (!lastName) {
+      document.getElementById('lastNameError').textContent = 'Last Name is required';
+      valid = false;
+    }
+    if (!email) {
+      document.getElementById('emailError').textContent = 'Email is required';
+      valid = false;
+    } else if (!validateEmail(email)) {
+      document.getElementById('emailError').textContent = 'Invalid email format';
+      valid = false;
+    }
+    if (!dob) {
+      document.getElementById('dobError').textContent = 'Date of Birth is required';
+      valid = false;
+    } else if (new Date(dob) > new Date()) {
+      document.getElementById('dobError').textContent = 'Date of Birth cannot be in the future';
+      valid = false;
+    }
+
+    if (!valid) return false; // Stop submission if invalid
+
+    // If valid, add data to table
+    addEmployeeToTable({ firstName, lastName, email, dob });
+
+    // Reset form
+    document.getElementById('employeeForm').reset();
+
+    return false; // Prevent form actual submission
+  }
+
+  function validateEmail(email) {
+    // Simple regex for email validation
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email.toLowerCase());
+  }
+
+  function addEmployeeToTable(emp) {
+    const table = document.getElementById('employeeTable');
+    const tbody = document.getElementById('tableBody');
+
+    // Create new row and cells
+    const row = tbody.insertRow();
+    row.insertCell(0).textContent = emp.firstName;
+    row.insertCell(1).textContent = emp.lastName;
+    row.insertCell(2).textContent = emp.email;
+    row.insertCell(3).textContent = new Date(emp.dob).toLocaleDateString();
+
+    // Show table if hidden
+    table.style.display = 'table';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Data Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+
+    input, button {
+      margin: 5px;
+      padding: 8px;
+      width: 250px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 80%;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Enter Employee Details</h2>
+
+<form id="employeeForm">
+  <div>
+    <input type="text" id="firstName" placeholder="First Name"><br>
+    <span class="error" id="firstNameError"></span>
+  </div>
+  <div>
+    <input type="text" id="lastName" placeholder="Last Name"><br>
+    <span class="error" id="lastNameError"></span>
+  </div>
+  <div>
+    <input type="email" id="email" placeholder="Email"><br>
+    <span class="error" id="emailError"></span>
+  </div>
+  <div>
+    <input type="date" id="dob" placeholder="Date of Birth"><br>
+    <span class="error" id="dobError"></span>
+  </div>
+  <br>
+  <button type="submit">Submit</button>
+</form>
+
+<!-- Table to display data -->
+<div id="employeeData"></div>
+
+<script>
+  const form = document.getElementById("employeeForm");
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Clear previous error messages
+    document.getElementById("firstNameError").textContent = "";
+    document.getElementById("lastNameError").textContent = "";
+    document.getElementById("emailError").textContent = "";
+    document.getElementById("dobError").textContent = "";
+
+    // Get values
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const dob = document.getElementById("dob").value;
+
+    let isValid = true;
+
+    // Validation
+    if (!firstName) {
+      document.getElementById("firstNameError").textContent = "First name is required.";
+      isValid = false;
+    }
+    if (!lastName) {
+      document.getElementById("lastNameError").textContent = "Last name is required.";
+      isValid = false;
+    }
+    if (!email) {
+      document.getElementById("emailError").textContent = "Email is required.";
+      isValid = false;
+    }
+    if (!dob) {
+      document.getElementById("dobError").textContent = "Date of birth is required.";
+      isValid = false;
+    }
+
+    // If valid, display data
+    if (isValid) {
+      const tableHTML = `
+        <h3>Employee Information</h3>
+        <table>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+          </tr>
+          <tr>
+            <td>${firstName}</td>
+            <td>${lastName}</td>
+            <td>${email}</td>
+            <td>${dob}</td>
+          </tr>
+        </table>
+      `;
+
+      document.getElementById("employeeData").innerHTML = tableHTML;
+
+      // Optional: Reset the form
+      form.reset();
+    }
+  });
+</script>
+
+</body>
+</html>
