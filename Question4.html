@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Form with Username</title>
+</head>
+<body>
+
+  <h2>User Form</h2>
+
+  First Name: <input id="firstName"><br><br>
+  Last Name: <input id="lastName"><br><br>
+  Age: <input id="age"><br><br>
+
+  <button onclick="saveData()">Submit</button>
+
+  <h3>JSON Output:</h3>
+  <pre id="jsonOutput"></pre>
+
+  <h3>Table Output:</h3>
+  <table border="1">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Age</th>
+      <th>Username</th>
+    </tr>
+    <tr id="tableRow">
+      <!-- Data will appear here -->
+    </tr>
+  </table>
+
+  <script>
+    function saveData() {
+      // Get input values
+      let firstName = document.getElementById("firstName").value.trim();
+      let lastName = document.getElementById("lastName").value.trim();
+      let age = document.getElementById("age").value.trim();
+
+      // Create username
+      let firstPart = firstName.slice(0, 2).toLowerCase(); // first 2 chars
+      let lastPart = lastName.slice(-2).toLowerCase();     // last 2 chars
+      let username = firstPart + lastPart + age;
+
+      // Store in object
+      let user = {
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+        username: username
+      };
+
+      // Convert to JSON
+      let jsonData = JSON.stringify(user, null, 2);
+      document.getElementById("jsonOutput").textContent = jsonData;
+
+      // Show in table
+      document.getElementById("tableRow").innerHTML =
+        `<td>${user.firstName}</td>
+         <td>${user.lastName}</td>
+         <td>${user.age}</td>
+         <td>${user.username}</td>`;
+    }
+  </script>
+
+</body>
+</html>

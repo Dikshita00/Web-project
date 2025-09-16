@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animation with Callback Functions</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .box {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: 20px;
+    }
+
+    #box1 {
+      background-color: plum;
+      left: 0;
+    }
+
+    #box2 {
+      background-color: rgb(51, 255, 0);
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="box1" class="box"></div>
+  <div id="box2" class="box"></div>
+
+  <script>
+    // Animate box1 (left to right)
+    let box1 = document.getElementById("box1");
+    let position1 = 0;
+
+    const interval1 = setInterval(() => {
+      if (position1 >= window.innerWidth / 2 - 25) {
+        clearInterval(interval1); // Stop at center
+      } else {
+        position1 += 5;
+        box1.style.left = position1 + "px";
+      }
+    }, 30); // move every 30ms
+
+    // Animate box2 (right to left) after 2-second delay
+    let box2 = document.getElementById("box2");
+    let position2 = 0;
+
+    const timeout2 = setTimeout(() => {
+      const interval2 = setInterval(() => {
+        if (position2 >= window.innerWidth / 2 - 25) {
+          clearInterval(interval2); // Stop at center
+        } else {
+          position2 += 5;
+          box2.style.right = position2 + "px";
+        }
+      }, 30);
+    }, 2000); // Start after 2 seconds
+
+  </script>
+</body>
+</html>
