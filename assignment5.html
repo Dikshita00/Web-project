@@ -1,18 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Multiline Text</title>
+  <meta charset="UTF-8">
+  <title>Try Catch Finally in JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 16px;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+  </style>
 </head>
 <body>
-  <p id="myPara" style="cursor:pointer;">Click me!</p>
+
+  <h2>Division Calculator</h2>
+
+  <input type="number" id="num1" placeholder="Enter number A">
+  <input type="number" id="num2" placeholder="Enter number B">
+  <button onclick="divideNumbers()">Divide</button>
+
+  <div id="result"></div>
+
   <script>
-    const p = document.getElementById('myPara');
-    p.onclick = () => {
-      p.textContent = "Hello!\nwhat is your name\nwhere you live\nwhat is your hobby\nwhat is your education details";
-     
-      p.style.whiteSpace = "pre-line";
-    };
+    function divideNumbers() {
+      const a = document.getElementById("num1").value;
+      const b = document.getElementById("num2").value;
+      const resultDiv = document.getElementById("result");
+
+      try {
+        // Convert inputs to numbers
+        const num1 = parseFloat(a);
+        const num2 = parseFloat(b);
+
+        if (isNaN(num1) || isNaN(num2)) {
+          throw new Error("Both inputs must be valid numbers.");
+        }
+
+        if (num2 === 0) {
+          throw new Error("Cannot divide by zero.");
+        }
+
+        const result = num1 / num2;
+        resultDiv.textContent = "Result: " + result;
+        resultDiv.className = "success";
+
+      } catch (error) {
+        resultDiv.textContent = "Error: " + error.message;
+        resultDiv.className = "error";
+
+      } finally {
+        console.log("Division operation attempted.");
+      }
+    }
   </script>
 
 </body>

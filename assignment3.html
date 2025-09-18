@@ -1,37 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Simple Table</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts Viewer</title>
+    <style>
+        table{
+            border-collapse: collapse;
+            width:90%;
+            margin-top: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        th,td{
+            border:1px solid #333;
+            padding:8px 12px;
+            text-align:left;
+        }
+        th{
+            background-color: whitesmoke;
+        }
+        td.title{
+            max-width: 400px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: help;
+        }
+        label, input,button{
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+    </style>
 </head>
 <body>
+    
+  <h2>Posts Viewer</h2>
 
+  <!-- Button to load all posts -->
+  <button onclick="loadAllPosts()">Load All Posts</button>
 
-  Num: <input id="num" type="number"><br>
-  From: <input id="from" type="number"><br>
-  To: <input id="to" type="number"><br>
+  <br />
 
-  
-  <button id="show">Show</button>
-  <div id="result"></div>
+  <!-- Input to accept ID and button to load post by ID -->
+  <label for="postId">Enter Post ID: </label>
+  <input type="number" id="postId" min="1" max="100" />
+  <button onclick="loadPostById()">Load Post By ID</button>
+
+  <!-- Container for table -->
+  <div id="table-container"></div>
 
   <script>
-    $('#show').click(function() {
-      let n = Number($('#num').val());
-      let f = Number($('#from').val());
-      let t = Number($('#to').val());
-     
-      if (isNaN(n) || isNaN(f) || isNaN(t) || f > t) {
-        $('#result').text('Invalid input');
+    // Helper to truncate text nicely with tooltip
+    function truncateText(text, maxLength) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    }
+
+    // Function to build table HTML from posts array
+    function buildTable(posts) {
+      if (!posts || posts.length === 0) {
+        return '<p>No posts found.</p>';
+      }
+
+      let table = `<table>
+                    <thead>
+                      <tr>
+                        <th style="width: 50px;">ID</th>
+                        <th>Title</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+
+      posts.forEach(post => {
+        const shortTitle = truncateText(post.title, 50);
+        table += `<tr>
+                    <td>${post.id}</td>
+                    <td class="title" title="${post.title}">${shortTitle}</td>
+                  </tr>`;
+      });
+
+      table += '</tbody></table>';
+      return table;
+    }
+
+    // Load all posts
+    function loadAllPosts() {
+      fetch('https://jsonplaceholder.typicode.com/posts')
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.json();
+        })
+        .then(posts => {
+          document.getElementById('table-container').innerHTML = buildTable(posts);
+        })
+        .catch(error => {
+          document.getElementById('table-container').innerText = 'Error: ' + error.message;
+        });
+    }
+
+    // Load post by ID entered by user
+    function loadPostById() {
+      const id = document.getElementById('postId').value.trim();
+      if (!id) {
+        alert('Please enter a Post ID');
         return;
       }
-      let res = '<table border="1">';
-      for(let i = f; i <= t; i++) {
-        res += `<tr><td>${n} * ${i} =</td><td>${n*i}</td></tr>`;
-      }
-      res += '</table>';
-      $('#result').html(res);
-    });
+      fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+        .then(response => {
+          if (!response.ok) {
+            if (response.status === 404) {
+              throw new Error('Post not found');
+            } else {
+              throw new Error('Network response was not ok');
+            }
+          }
+          return response.json();
+        })
+        .then(post => {
+          // buildTable expects array, so wrap post in array
+          document.getElementById('table-container').innerHTML = buildTable([post]);
+        })
+        .catch(error => {
+          document.getElementById('table-container').innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        });
+    }
   </script>
 
 </body>

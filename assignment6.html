@@ -1,72 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Centered Fade In/Out Ad</title>
+  <meta charset="UTF-8">
+  <title>Class Manipulation Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
 
-<style>
-  body, html {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #f8abab;
-    flex-direction: column;
-  }
+    .highlight {
+      background-color: yellow;
+      font-weight: bold;
+    }
 
-  #ad {
-    width: 320px;
-    padding: 25px;
-    background: linear-gradient(135deg, #ff416c, #ff4b2b);
-    color: white;
-    font-size: 22px;
-    text-align: center;
-    border-radius: 12px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    transition: opacity 1s ease;
-    margin-bottom: 20px;
-  }
+    .hidden {
+      display: none;
+    }
 
- 
-  #ad.visible {
-    opacity: 1;
-  }
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
 
-  button {
-    background-color: #ff4b2b;
-    border: none;
-    padding: 12px 30px;
-    font-size: 18px;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #ff663f;
-  }
-</style>
+    #myText {
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      width: 300px;
+    }
+  </style>
 </head>
 <body>
 
-<div id="ad">This is your colorful AD! </div>
-<button id="btnDisappear">Disappear</button>
-<script>
-  const ad = document.getElementById('ad');
-  const btn = document.getElementById('btnDisappear');
-  window.onload = () => {
-    ad.classList.add('visible');
-  };
-  btn.onclick = () => {
-    ad.classList.remove('visible');
-    setTimeout(() => {
-      ad.style.display = 'none';
-    }, 1000);
-  };
-</script>
+  <h2>Class Manipulation with JavaScript</h2>
+
+  <button onclick="addClass()">Add Class</button>
+  <button onclick="removeClass()">Remove Class</button>
+  <button onclick="toggleClass()">Toggle Class</button>
+
+  <div id="myText">This is a sample text box.</div>
+
+  <script>
+    const textElement = document.getElementById("myText");
+
+    function addClass() {
+      textElement.classList.add("highlight");
+    }
+
+    function removeClass() {
+      textElement.classList.remove("highlight");
+    }
+
+    function toggleClass() {
+      textElement.classList.toggle("highlight");
+    }
+  </script>
 
 </body>
 </html>

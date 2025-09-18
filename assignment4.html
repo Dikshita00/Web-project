@@ -1,63 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Quote Scroller</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8" />
+  <title>Posts Viewer with Validation</title>
   <style>
-    #container {
-      width: 500px;
-      overflow: hidden;
-      border: 3px solid #000000;
-      position: relative;
-      height: 80px;
-      margin-bottom: 20px;
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
     }
-
-    #quote {
-      position: absolute;
+    th, td {
+      border: 1px solid #333;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    td.title {
+      max-width: 400px;
       white-space: nowrap;
-      font-family: 'Georgia', serif;
-      font-size: 28px;
-      color: #fa0000;
-      top: 20px;
-      left: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: help;
     }
-
-    button {
-      padding: 20px 40px;
-      font-size: 26px;
-      cursor: pointer;
+    label, input, button {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    #error-message {
+      color: red;
+      margin-top: 5px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div id="container">
-    <div id="quote">“I just hee hee the way through life.”</div>
-  </div>
-  <button id="startBtn">Start Scrolling</button>
+
+  <h2>Posts Viewer with Validation</h2>
+
+  <button onclick="loadAllPosts()">Load All Posts</button>
+
+  <br />
+
+  <label for="postId">Enter Post ID (1-100): </label>
+  <input 
+    type="number" 
+    id="postId"
+    min="1" max="100" 
+    required 
+    aria-describedby="error-message"
+  />
+  <button onclick="loadPostById()">Load Post By ID</button>
+
+  <div id="error-message" role="alert" aria-live="assertive"></div>
+
+  <div id="table-container"></div>
 
   <script>
-    $(function() {
-      const containerWidth = $('#container').width();
-      const quote = $('#quote');
-      const quoteWidth = quote.width();
-      function animateLTR() {
-        return quote.animate({ left: containerWidth - quoteWidth }, 3000).promise();
+    function truncateText(text, maxLength) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    }
+
+    function buildTable(posts) {
+      if (!posts || posts.length === 0) {
+        return '<p>No posts found.</p>';
       }
-      function animateRTL() {
-        return quote.animate({ left: 0 }, 3000).promise();
-      }
-      $('#startBtn').click(async function() {
-        $(this).prop('disabled', true);
-        quote.css('left', 0);
-        for (let i = 0; i < 4; i++) {
-          await animateLTR();
-          await animateRTL();
-        }
-        await animateRTL();
-        $(this).prop('disabled', false);
+
+      let table = `<table>
+                    <thead>
+                      <tr>
+                        <th style="width: 50px;">ID</th>
+                        <th>Title</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+
+      posts.forEach(post => {
+        const shortTitle = truncateText(post.title, 50);
+        table += `<tr>
+                    <td>${post.id}</td>
+                    <td class="title" title="${post.title}">${shortTitle}</td>
+                  </tr>`;
       });
-    });
+
+      table += '</tbody></table>';
+      return table;
+    }
+
+    function loadAllPosts() {
+      clearError();
+      fetch('https://jsonplaceholder.typicode.com/posts')
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.json();
+        })
+        .then(posts => {
+          document.getElementById('table-container').innerHTML = buildTable(posts);
+        })
+        .catch(error => {
+          document.getElementById('table-container').innerText = 'Error: ' + error.message;
+        });
+    }
+
+    function clearError() {
+      const errorDiv = document.getElementById('error-message');
+      errorDiv.textContent = '';
+    }
+
+    function showError(message) {
+      const errorDiv = document.getElementById('error-message');
+      errorDiv.textContent = message;
+    }
+
+    function loadPostById() {
+      clearError();
+      const input = document.getElementById('postId');
+
+      // Use HTML5 validation API
+      if (!input.checkValidity()) {
+        // Show built-in validation message or custom message
+        if (input.validity.valueMissing) {
+          showError('Post ID is required.');
+        } else if (input.validity.rangeUnderflow) {
+          showError('Post ID must be at least 1.');
+        } else if (input.validity.rangeOverflow) {
+          showError('Post ID must be 100 or less.');
+        } else {
+          showError('Invalid input.');
+        }
+        return;
+      }
+
+      // If input valid, fetch data
+      fetch(`https://jsonplaceholder.typicode.com/posts/${input.value}`)
+        .then(response => {
+          if (!response.ok) {
+            if (response.status === 404) {
+              throw new Error('Post not found');
+            } else {
+              throw new Error('Network response was not ok');
+            }
+          }
+          return response.json();
+        })
+        .then(post => {
+          document.getElementById('table-container').innerHTML = buildTable([post]);
+        })
+        .catch(error => {
+          document.getElementById('table-container').innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        });
+    }
   </script>
 
 </body>

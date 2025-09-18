@@ -1,27 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Simple Factorial</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8" />
+  <title>Readable Posts Table</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    td.title {
+      max-width: 400px;       /* limit width */
+      white-space: nowrap;    /* prevent wrapping */
+      overflow: hidden;       /* hide overflow */
+      text-overflow: ellipsis; /* add ... */
+      cursor: help;           /* show tooltip on hover */
+    }
+  </style>
 </head>
 <body>
 
-  Number: <input type="number" id="num" />
-  <p id="result"></p>
+  <h2>Posts List (Clean & Readable)</h2>
+  <button onclick="loadPosts()">Load Posts</button>
+
+  <div id="table-container"></div>
 
   <script>
-    $('#num').change(function() {
-      let n = parseInt($(this).val());
-      if (n < 0 || isNaN(n)) {
-        $('#result').text('Enter non-negative number');
-        return;
-      }
-      let fact = 1;
-      for(let i = 1; i <= n; i++) {
-        fact *= i;
-      }
-      $('#result').text('Factorial: ' + fact);
-    });
+    function truncateText(text, maxLength) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    }
+
+    function loadPosts() {
+      fetch('https://jsonplaceholder.typicode.com/posts')
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.json();
+        })
+        .then(posts => {
+          let table = `<table>
+                          <thead>
+                            <tr>
+                              <th style="width: 50px;">ID</th>
+                              <th>Title</th>
+                            </tr>
+                          </thead>
+                          <tbody>`;
+
+          posts.forEach(post => {
+            const shortTitle = truncateText(post.title, 50);
+            table += `<tr>
+                        <td>${post.id}</td>
+                        <td class="title" title="${post.title}">${shortTitle}</td>
+                      </tr>`;
+          });
+
+          table += `</tbody></table>`;
+
+          document.getElementById('table-container').innerHTML = table;
+        })
+        .catch(error => {
+          document.getElementById('table-container').innerText = 'Error: ' + error.message;
+        });
+    }
   </script>
 
 </body>
