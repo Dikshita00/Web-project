@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h3>sort array in assending</h3>
+        <p id ="before sorting"></p>
+        <p id ="after sorting"></p>
+        <script>
+            let a=[12,23,45,73,2,9,654,8774,86,23.87876]
+            document.getElementById("before sorting").innerHTML="before sorting:"+a;
+
+            a.sort(function(x,y)
+            {
+                return x-y;
+
+            });
+            document.getElementById("after sorting").innerHTML="after sorting:"+a;
+
+        </script>
+    </body>
+</html>

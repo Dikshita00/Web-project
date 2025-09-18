@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Centered Fade In/Out Ad</title>
+
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8abab;
+    flex-direction: column;
+  }
+
+  #ad {
+    width: 320px;
+    padding: 25px;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 1s ease;
+    margin-bottom: 20px;
+  }
+
+ 
+  #ad.visible {
+    opacity: 1;
+  }
+
+  button {
+    background-color: #ff4b2b;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #ff663f;
+  }
+</style>
+</head>
+<body>
+
+<div id="ad">This is your colorful AD! </div>
+<button id="btnDisappear">Disappear</button>
+<script>
+  const ad = document.getElementById('ad');
+  const btn = document.getElementById('btnDisappear');
+  window.onload = () => {
+    ad.classList.add('visible');
+  };
+  btn.onclick = () => {
+    ad.classList.remove('visible');
+    setTimeout(() => {
+      ad.style.display = 'none';
+    }, 1000);
+  };
+</script>
+
+</body>
+</html>

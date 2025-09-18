@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Factorial</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  Number: <input type="number" id="num" />
+  <p id="result"></p>
+
+  <script>
+    $('#num').change(function() {
+      let n = parseInt($(this).val());
+      if (n < 0 || isNaN(n)) {
+        $('#result').text('Enter non-negative number');
+        return;
+      }
+      let fact = 1;
+      for(let i = 1; i <= n; i++) {
+        fact *= i;
+      }
+      $('#result').text('Factorial: ' + fact);
+    });
+  </script>
+
+</body>
+</html>

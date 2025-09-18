@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jQuery Fading Methods</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    #box {
+      width: 200px;
+      height: 100px;
+      background-color: rgb(100, 102, 219);
+      margin-top: 20px;
+      text-align: center;
+      line-height: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <h3>jQuery Fading Methods</h3>
+
+  <button id="fadeInBtn">Fade In</button>
+  <button id="fadeOutBtn">Fade Out</button>
+  <button id="fadeToggleBtn">Fade Toggle</button>
+  <button id="fadeToBtn">Fade To 80%</button>
+
+  <div id="box">Hello</div>
+
+  <script>
+    $(document).ready(function( ) {
+      $("#fadeInBtn").click(function() {
+        $("#box").fadeIn(1000);
+      });
+
+      $("#fadeOutBtn").click(function() {
+        $("#box").fadeOut(1000);
+      });
+
+      $("#fadeToggleBtn").click(function() {
+        $("#box").fadeToggle(1000);
+      });
+
+      $("#fadeToBtn").click(function() {
+        $("#box").fadeTo(1000, 0.5); 
+      });
+    });
+  </script>
+
+</body>
+</html>

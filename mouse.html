@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            jQuery mouseover and moseout
+        </title>
+        <script src="http://code.jQuery.com/jQuery-3.6.0.min.js"></script>
+        <style>
+            div{
+                width: 400px;
+                height:200px;
+                background-color: lightcoral;
+                margin:40px;
+                user-select:none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+      
+                font-size: 20px;
+                 user-select: none;
+                 cursor: pointer;
+                 border: 1px solid #000000;
+            }
+        </style> 
+    </head>
+    <body>
+        <div id="div1">over mee!</div>
+        
+        <script>
+            $("#div1").mouseover(function()
+                {
+                    $("div").css("background-color","pink");
+                });
+            $("#div1").mouseout(function() {
+             $("div").css("background-color", "lightgreen");
+                });
+        </script>
+    </body>
+</html>

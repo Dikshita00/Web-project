@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Table</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+
+  Num: <input id="num" type="number"><br>
+  From: <input id="from" type="number"><br>
+  To: <input id="to" type="number"><br>
+
+  
+  <button id="show">Show</button>
+  <div id="result"></div>
+
+  <script>
+    $('#show').click(function() {
+      let n = Number($('#num').val());
+      let f = Number($('#from').val());
+      let t = Number($('#to').val());
+     
+      if (isNaN(n) || isNaN(f) || isNaN(t) || f > t) {
+        $('#result').text('Invalid input');
+        return;
+      }
+      let res = '<table border="1">';
+      for(let i = f; i <= t; i++) {
+        res += `<tr><td>${n} * ${i} =</td><td>${n*i}</td></tr>`;
+      }
+      res += '</table>';
+      $('#result').html(res);
+    });
+  </script>
+
+</body>
+</html>

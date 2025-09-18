@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Moving & Growing Box</title>
+  <style>
+    #box {
+      position: absolute;
+      top: 100px;
+      left: 0;
+      width: 50px;
+      height: 50px;
+      background-color: rgb(231, 24, 186);
+      transition: width 0.1s, height 0.1s; /* smooth size transition */
+    }
+  </style>
+</head>
+<body>
+
+  <div id="box"></div>
+
+  <script>
+    const box = document.getElementById('box');
+    let pos = 0;         
+    let size = 50;       
+    const maxPos = 500;  
+    const maxSize = 150;
+
+    const interval = setInterval(() => {
+      if (pos >= maxPos) {
+        clearInterval(interval); 
+        return;
+      }
+      
+      pos += 5;  
+      size += 2; 
+      
+     
+      if (size > maxSize) size = maxSize;
+
+      box.style.left = pos + 'px';
+      box.style.width = size + 'px';
+      box.style.height = size + 'px';
+    }, 50); 
+  </script>
+
+</body>
+</html>

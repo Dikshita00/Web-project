@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Multiline Text</title>
+</head>
+<body>
+  <p id="myPara" style="cursor:pointer;">Click me!</p>
+  <script>
+    const p = document.getElementById('myPara');
+    p.onclick = () => {
+      p.textContent = "Hello!\nwhat is your name\nwhere you live\nwhat is your hobby\nwhat is your education details";
+     
+      p.style.whiteSpace = "pre-line";
+    };
+  </script>
+
+</body>
+</html>

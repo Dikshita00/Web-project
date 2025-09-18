@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multiline Input Display</title>
+</head>
+<body>
+
+  <h3>Enter Multiline Text:</h3>
+  <textarea id="userInput" rows="10" cols="50" placeholder="Enter text here..."></textarea>
+  <br><br>
+
+  <label for="rows">Number of rows:</label>
+  <input type="number" id="rows" value="5" min="1">
+  <br><br>
+
+  <button onclick="displayRows()">Display</button>
+
+  <h3>Output:</h3>
+  <div id="output"></div>
+
+  <script>
+    function displayRows() {
+      const text = document.getElementById("userInput").value;
+      const rowCount = parseInt(document.getElementById("rows").value);
+      const lines = text.split('\n');
+      
+      const outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = ""; // Clear previous output
+
+      for (let i = 0; i < rowCount && i < lines.length; i++) {
+        const p = document.createElement("p");
+        p.textContent = lines[i];
+        outputDiv.appendChild(p);
+      }
+    }
+  </script>
+
+</body>
+</html>
