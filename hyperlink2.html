@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculate Table</title>
+  <script>
+    function showTable() {
+      const input = document.getElementById("number").value.trim();
+      const output = document.getElementById("output");
+      output.innerHTML = ""; // Clear previous output
+
+      if (input === "") {
+        alert("Please enter a value.");
+        return;
+      }
+
+      const num = Number(input);
+      if (isNaN(num)) {
+        alert("Please enter a valid number.");
+        return;
+      }
+
+      let table = `<h2>Table of ${num}</h2>`;
+      for (let i = 1; i <= 10; i++) {
+        table += `${num} × ${i} = ${num * i}<br>`;
+      }
+      output.innerHTML = table;
+    }
+  </script>
+</head>
+<body>
+  <h1>Multiplication Table Generator</h1>
+  <input type="text" id="number" placeholder="Enter a number">
+  <button onclick="showTable()">Generate Table</button>
+  <div id="output" style="margin-top:20px;"></div>
+</body>
+</html>

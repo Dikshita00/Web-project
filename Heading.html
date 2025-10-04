@@ -1,0 +1,34 @@
+<!-- create index.html
+	1) Display Headings with h1 tag 
+	   and display current date and time - 
+	   using iframe  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+   <script>
+    function updateDateTime() {    //for date and time
+      const now = new Date();
+      document.getElementById("datetime").innerHTML = now.toLocaleString();
+    }
+    setInterval(updateDateTime, 1000); // Update every second
+   </script>
+
+
+</head>
+
+<body onload="updateDateTime()">
+  <div id="datetime" style="font-size:20px; font-family:Arial;"></div>
+
+</body>
+<body>
+
+    <h1>This is heading</h1>   
+    
+</body>
+</html>
+
+

@@ -1,0 +1,62 @@
+<!-- accept data from user using input fields 
+      firstName LastName age 	  
+	  create username of User dynamically 
+      take 1st 2 characters from firstName
+	  take last 2 characters from lastName
+	  and age 
+	  
+	  eg Amit Patil 30 === amil30  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Username Generator</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input { margin: 5px; }
+    #result { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Create Your Username</h1>
+
+  <label>First Name:</label>
+  <input type="text" id="firstName"><br>
+
+  <label>Last Name:</label>
+  <input type="text" id="lastName"><br>
+
+  <label>Age:</label>
+  <input type="text" id="age"><br>
+
+  <button onclick="generateUsername()">Generate Username</button>
+
+  <div id="result"></div>
+
+  <script>
+    function generateUsername() {
+      const fn = document.getElementById("firstName").value.trim();
+      const ln = document.getElementById("lastName").value.trim();
+      const age = document.getElementById("age").value.trim();
+
+      if (fn.length < 2 || ln.length < 2 || age === "") {
+        alert("Please enter valid First Name, Last Name (min 2 characters), and Age.");
+        return;
+      }
+
+      if (isNaN(age)) {
+        alert("Age must be a number.");
+        return;
+      }
+
+      const username =
+        fn.substring(0, 2).toLowerCase() +
+        ln.substring(ln.length - 2).toLowerCase() +
+        age;
+
+      document.getElementById("result").innerHTML =
+        `<strong>Your Username:</strong> ${username}`;
+    }
+  </script>
+</body>
+</html>
