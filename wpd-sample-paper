@@ -1,0 +1,234 @@
+<!--   2) in same page Hyperlink to Calculate
+     in Calculate.html   
+		accept data in 1 text field 
+		validate data is enter or not 
+		if data is in number format display table of that 
+		number in 1 page 
+		 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home Page</title>
+</head>
+<body>
+  <h1>Welcome to My Page</h1>
+  <a href="calculate.html">Go to Calculator</a>
+</body>
+</html>
+
+...............................................................................................................................................................
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculate Table</title>
+  <script>
+    function showTable() {
+      const input = document.getElementById("number").value.trim();
+      const output = document.getElementById("output");
+      output.innerHTML = ""; // Clear previous output
+
+      if (input === "") {
+        alert("Please enter a value.");
+        return;
+      }
+
+      const num = Number(input);
+      if (isNaN(num)) {
+        alert("Please enter a valid number.");
+        return;
+      }
+
+      let table = `<h2>Table of ${num}</h2>`;
+      for (let i = 1; i <= 10; i++) {
+        table += `${num} × ${i} = ${num * i}<br>`;
+      }
+      output.innerHTML = table;
+    }
+  </script>
+</head>
+<body>
+  <h1>Multiplication Table Generator</h1>
+  <input type="text" id="number" placeholder="Enter a number">
+  <button onclick="showTable()">Generate Table</button>
+  <div id="output" style="margin-top:20px;"></div>
+</body>
+</html>
+
+.......................................................................................................................................................
+<!-- create index.html
+	1) Display Headings with h1 tag 
+	   and display current date and time - 
+	   using iframe  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+   <script>
+    function updateDateTime() {    //for date and time
+      const now = new Date();
+      document.getElementById("datetime").innerHTML = now.toLocaleString();
+    }
+    setInterval(updateDateTime, 1000); // Update every second
+   </script>
+
+
+</head>
+
+<body onload="updateDateTime()">
+  <div id="datetime" style="font-size:20px; font-family:Arial;"></div>
+
+</body>
+<body>
+
+    <h1>This is heading</h1>   
+    
+</body>
+</html>
+.......................................................................................................................................................
+
+<!-- accept data from user using input fields 
+      firstName LastName age 	  
+	  create username of User dynamically 
+      take 1st 2 characters from firstName
+	  take last 2 characters from lastName
+	  and age 
+	  
+	  eg Amit Patil 30 === amil30  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Username Generator</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input { margin: 5px; }
+    #result { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Create Your Username</h1>
+
+  <label>First Name:</label>
+  <input type="text" id="firstName"><br>
+
+  <label>Last Name:</label>
+  <input type="text" id="lastName"><br>
+
+  <label>Age:</label>
+  <input type="text" id="age"><br>
+
+  <button onclick="generateUsername()">Generate Username</button>
+
+  <div id="result"></div>
+
+  <script>
+    function generateUsername() {
+      const fn = document.getElementById("firstName").value.trim();
+      const ln = document.getElementById("lastName").value.trim();
+      const age = document.getElementById("age").value.trim();
+
+      if (fn.length < 2 || ln.length < 2 || age === "") {
+        alert("Please enter valid First Name, Last Name (min 2 characters), and Age.");
+        return;
+      }
+
+      if (isNaN(age)) {
+        alert("Age must be a number.");
+        return;
+      }
+
+      const username =
+        fn.substring(0, 2).toLowerCase() +
+        ln.substring(ln.length - 2).toLowerCase() +
+        age;
+
+      document.getElementById("result").innerHTML =
+        `<strong>Your Username:</strong> ${username}`;
+    }
+  </script>
+</body>
+</html>
+
+
+.......................................................................................................................................................
+
+<!-- 4) accept Student Information in Page 
+ FirstName , LastName , Marks 
+ add data in Student Object 
+ 
+ const stud = {
+  firstName: "John",
+  lastname: "",
+  marks : 48
+};
+
+onButton Click  -   add data in Student Object 
+and display data on same page from Object  -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Info</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input { margin: 5px; }
+    #output { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Enter Student Information</h1>
+
+  <label>First Name:</label>
+  <input type="text" id="firstName"><br>
+
+  <label>Last Name:</label>
+  <input type="text" id="lastName"><br>
+
+  <label>Marks:</label>
+  <input type="text" id="marks"><br>
+
+  <button onclick="updateStudent()">Submit</button>
+
+  <div id="output"></div>
+
+  <script>
+    const stud = {
+      firstName: "John",
+      lastName: "",
+      marks: 48
+    };
+
+    function updateStudent() {
+      const fn = document.getElementById("firstName").value;
+      const ln = document.getElementById("lastName").value;
+      const mk = document.getElementById("marks").value;
+
+      if (fn === "" || ln === "" || mk === "") {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      if (isNaN(mk)) {
+        alert("Marks must be a number.");
+        return;
+      }
+
+      stud.firstName = fn;
+      stud.lastName = ln;
+      stud.marks = Number(mk);
+
+      document.getElementById("output").innerHTML =
+        `<strong>Student Info:</strong><br>
+         First Name: ${stud.firstName}<br>
+         Last Name: ${stud.lastName}<br>
+         Marks: ${stud.marks}`;
+    }
+  </script>
+</body>
+</html>
+
